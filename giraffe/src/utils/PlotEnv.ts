@@ -17,13 +17,14 @@ import {
 } from '../constants'
 
 import {
-  SizedConfig,
-  Margins,
-  Scale,
-  LineLayerConfig,
-  LayerSpec,
   ColumnType,
   Formatter,
+  LayerSpec,
+  LayerTypes,
+  LineLayerConfig,
+  Margins,
+  Scale,
+  SizedConfig,
 } from '../types'
 
 const X_DOMAIN_AESTHETICS = ['x', 'xMin', 'xMax']
@@ -187,13 +188,21 @@ export class PlotEnv {
   }
 
   public get xTickFormatter(): Formatter {
-    const firstXMapping = this.getSpec(0).xColumnKey
+    const spec = this.getSpec(0)
+    if (!spec) {
+      return DEFAULT_FORMATTER
+    }
+    const firstXMapping = spec.xColumnKey
 
     return this.getFormatterForColumn(firstXMapping)
   }
 
   public get yTickFormatter(): Formatter {
-    const firstYMapping = this.getSpec(0).yColumnKey
+    const spec = this.getSpec(0)
+    if (!spec) {
+      return DEFAULT_FORMATTER
+    }
+    const firstYMapping = spec.yColumnKey
 
     return this.getFormatterForColumn(firstYMapping)
   }
@@ -205,7 +214,7 @@ export class PlotEnv {
     const memoizedTransformKey = `${layerIndex}: ${layerConfig.type}`
 
     switch (layerConfig.type) {
-      case 'line': {
+      case LayerTypes.Line: {
         const transform = this.fns.get(memoizedTransformKey, lineTransform)
 
         return transform(
@@ -218,7 +227,7 @@ export class PlotEnv {
         )
       }
 
-      case 'scatter': {
+      case LayerTypes.Scatter: {
         const transform = this.fns.get(memoizedTransformKey, scatterTransform)
 
         return transform(
@@ -231,7 +240,7 @@ export class PlotEnv {
         )
       }
 
-      case 'histogram': {
+      case LayerTypes.Histogram: {
         const transform = this.fns.get(memoizedTransformKey, histogramTransform)
 
         return transform(
@@ -245,7 +254,7 @@ export class PlotEnv {
         )
       }
 
-      case 'heatmap': {
+      case LayerTypes.Heatmap: {
         const transform = this.fns.get(memoizedTransformKey, heatmapTransform)
 
         return transform(
@@ -261,11 +270,13 @@ export class PlotEnv {
         )
       }
 
-      case 'custom':
+      case LayerTypes.Gauge:
+      case LayerTypes.Custom:
+      case LayerTypes.SingleStat:
         return null
 
       default:
-        const unknownConfig: never = layerConfig
+        const unknownConfig = layerConfig
         const unknownType = (unknownConfig as any).type
 
         throw new Error(
@@ -408,19 +419,24 @@ const areUncontrolledDomainsStale = (
     ...X_DOMAIN_AESTHETICS,
     ...Y_DOMAIN_AESTHETICS,
   ].some(aes =>
-    config.layers.some(
-      (layer, layerIndex) => layer[aes] !== prevConfig.layers[layerIndex][aes]
-    )
+    config.layers.some((layer, layerIndex) => {
+      if (layerIndex >= prevConfig.layers.length) {
+        return false
+      }
+      return layer[aes] !== prevConfig.layers[layerIndex][aes]
+    })
   )
 
   if (xyMappingsChanged) {
     return true
   }
 
-  const binCountChanged = config.layers.some(
-    (layer: any, layerIndex) =>
-      layer.binCount !== (prevConfig.layers[layerIndex] as any).binCount
-  )
+  const binCountChanged = config.layers.some((layer: any, layerIndex) => {
+    if (layerIndex >= prevConfig.layers.length) {
+      return false
+    }
+    return layer.binCount !== (prevConfig.layers[layerIndex] as any).binCount
+  })
 
   if (binCountChanged) {
     return true

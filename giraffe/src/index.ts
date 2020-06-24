@@ -17,6 +17,8 @@ export {lineTransform} from './transforms/line'
 
 // Constants
 export * from './constants/colorSchemes'
+export * from './constants/singleStatStyles'
+export * from './constants/gaugeStyles'
 
 // Types
 export {
@@ -25,14 +27,18 @@ export {
   Config,
   DomainLabel,
   Formatter,
+  GaugeTheme,
+  GaugeLayerConfig,
   HistogramLayerConfig,
   HistogramPosition,
   LayerConfig,
+  LayerTypes,
   LineInterpolation,
   LineLayerConfig,
   LinePosition,
   Margins,
   NumericColumnData,
   Scale,
+  SingleStatLayerConfig,
   Table,
 } from './types'

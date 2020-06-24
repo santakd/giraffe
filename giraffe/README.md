@@ -2,6 +2,10 @@
 
 A React-based visualization library powering the data visualizations in [InfluxDB 2.0](https://github.com/influxdata/influxdb/) UI.
 
+## Demos
+
+[See the visualizations in action using Storybook](https://influxdata.github.io/giraffe)
+
 ## Quick Start
 
 1. In your React code, import the `Plot` component and the `newTable` utility function
@@ -142,13 +146,13 @@ Here is an example of turning a result in comma separate values (CSV) from Flux 
 
 - **gridColor**: _string. Optional._ The _CSS color value_ of the grid lines. Applies to the inner horizontal and vertical rule lines. Excludes the axes and the border around the graph.
 
-- **gridOpacity**: _number. Optional. Recommendation: do not include. Defaults to 1 when excluded._ A value between 0 and 1 for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the grid lines. Applies to the inner horizontal and vertical rule lines. Excludes the axes and the border around the graph.
+- **gridOpacity**: _number. Optional. Recommendation: do not include. Defaults to 1 when excluded._ A value between 0 and 1 inclusive for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the grid lines. Applies to the inner horizontal and vertical rule lines. Excludes the axes and the border around the graph.
 
 - **showAxes**: _boolean. Optional. Recommendation: do not include. Defaults to true when excluded._ Indicates whether Plot axes should be visible. Applies to both x-axis and y-axis simultaneously.
 
 - **axisColor**: _string. Optional._ The _CSS color value_ of the axes and the border around the graph. Excludes the inner horizontal and vertical rule lines.
 
-- **axisOpacity**: _number. Optional. Recommendation: do not include. Defaults to 1 when excluded._ A value between 0 and 1 for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the axes and the border around the graph. Excludes the inner horizontal and vertical rule lines.
+- **axisOpacity**: _number. Optional. Recommendation: do not include. Defaults to 1 when excluded._ A value between 0 and 1 inclusive for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the axes and the border around the graph. Excludes the inner horizontal and vertical rule lines.
 
 - **xTicks**: _array[number, ...]. Optional._ An array of values representing tick marks on the x-axis. Actual data values and axis scaling may cause Plot to not render all of the given ticks, or Plot rendering may extend beyond all of the rendered ticks. When excluded, Giraffe attempts to use as many ticks as possible on the x-axis while keeping reasonable spacing between them.
 
@@ -265,7 +269,7 @@ Giraffe comes with utility functions.
 
   - **shadeBelow**: _boolean. Optional._ Uses **colors**. Indicates whether the area below each line should be shaded.
 
-  - **shadeBelowOpacity**: _number. Optional._ A value between 0 and 1 for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the shaded color below each line. No effect when **shadeBelow** is false or not included.
+  - **shadeBelowOpacity**: _number. Optional._ A value between 0 and 1 inclusive for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the shaded color below each line. No effect when **shadeBelow** is false or not included.
 
 - **ScatterLayerConfig**: _Object_. Maximum one per `<Plot>`. Properties are:
 
@@ -295,9 +299,9 @@ Giraffe comes with utility functions.
 
   - **colors**: _array[string, ...]. Optional._ An array of _CSS color values_ used as a gradient to give bars in each bin different colors based on the **fill** columns.
 
-  - **fillOpacity**: _number. Optional._ A value between 0 and 1 for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the shading inside the bins.
+  - **fillOpacity**: _number. Optional._ A value between 0 and 1 inclusive for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the shading inside the bins.
 
-  - **strokeOpacity**: _number. Optional._ A value between 0 and 1 for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the border of the bins. This is very hard to observe with human eyes unless the **fillOpacity** is near 0.
+  - **strokeOpacity**: _number. Optional._ A value between 0 and 1 inclusive for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the border of the bins. This is very hard to observe with human eyes unless the **fillOpacity** is near 0.
 
   - **strokeWidth**: _number. Optional._ The [_CanvasRenderingContext2D lineWidth_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineWidth) of the border of the bins. This is very hard to observe with human eyes unless the **fillOpacity** is near 0. A high value for **strokeWidth** will completely fill the bin with border color at an opacity indicated by **strokeOpacity**.
 
@@ -315,15 +319,129 @@ Giraffe comes with utility functions.
 
   - **colors**: _array[string, ...]. Optional._ An array of _CSS color values_ used as the color scheme in the heatmap. The color in index 0 is used to represent the "cold" area or background of the heatmap. The higher the index, the "hotter" the color will represent on the heatmap.
 
-  - **fillOpacity**: _number. Optional._ A value between 0 and 1 for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the shading inside the heat bins. Warning: low opacity is difficult to see visually and may be counterproductive for heatmaps.
+  - **fillOpacity**: _number. Optional._ A value between 0 and 1 inclusive for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the shading inside the heat bins. Warning: low opacity is difficult to see visually and may be counterproductive for heatmaps.
 
-  - **strokeOpacity**: _number. Optional._ A value between 0 and 1 for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the border of the heat bins. This is very hard to observe with human eyes unless the **fillOpacity** is near 0.
+  - **strokeOpacity**: _number. Optional._ A value between 0 and 1 inclusive for the [_CanvasRenderingContext2D globalAlpha_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalAlpha) of the border of the heat bins. This is very hard to observe with human eyes unless the **fillOpacity** is near 0.
 
   - **strokeWidth**: _number. Optional._ The [_CanvasRenderingContext2D lineWidth_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineWidth) of the border of the bins. This is very hard to observe with human eyes unless the **fillOpacity** is near 0. A high value for **strokeWidth** will completely fill the heat bin with border color at an opacity indicated by **strokeOpacity**.
 
   - **strokePadding**: _number. Optional._ The space around all four sides of each heat bin. The amount of spacing is the _width_ and _height_ used in the [_CanvasRenderingContext2D rect_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/rect) function.
 
-- **CustomLayerConfig**: _Object_. No limit per `<Plot>`.
+- **GaugeLayerConfig**: _Object_. Maximum one per `<Plot>`. Properties are:
+
+  - **type**: _'gauge'. **Required**._ Specifies that this LayerConfig is a gauge layer.
+
+  - **prefix**: _string. **Required**._ The text that appears before the gauge value. Use an empty string if no text is preferred.
+
+  - **suffix**: _string. **Required**._ The text that appears after the gauge value. Use an empty string if no text is preferred.
+
+  - **tickPrefix**: _string. **Required**._ The text that appears before each tick label. Use an empty string if no text is preferred.
+
+  - **tickSuffix**: _string. **Required**._ The text that appears after each tick label. Use an empty string if no text is preferred.
+
+  - **decimalPlaces**: _Object. **Required**._
+
+    - **isEnforced**: _boolean. Optional. Defaults to false when not included._ Indicates whether the number of decimal places ("**digits**") will be enforced. When **isEnforced** is falsy or omitted, **digits** will be locked to 2 for stat values with a decimal and 0 for stat values that are integers, and the **digits** option will be ignored.
+    - **digits**: _number. Optional. Defaults to 0 when not included. Maximum 10._ When **digits** is a non-integer number, the decimal portion is ignored. Represents the number of decimal places to display in the stat value. Displayed stat value is subject to rounding.
+
+  - **gaugeSize**: _number. Optional. **3.142** &#8804; gaugeSize &#8804; **6.283**._ The size of the Gauge as measured in [_radians_](https://www.mathsisfun.com/geometry/radians.html). Valid Gauge sizes range from a half circle to a full circle. Any size below &#960; is considered &#960; and any size above 2&#960; is considered 2&#960;. Rounded to 3 decimal places.
+
+  - **gaugeColors**: _Array. **Required**._ An array of objects that defines the colors of the Gauge. Each object has the following properties.
+
+    - **id**: _string. **Required**._ The id for this color. Should be unique within the **gaugeColors** array.
+
+    - **type**: _'min' | 'max' | 'threshold'. **Required**._ The type of value associated with this color. _'min'_ type comes first, _'max'_ type comes last, and _'threshold'_ types are in between _'min'_ and _'max'_. **gaugeColors** must contain at least one _'min'_ type and one _'max'_ type for the Gauge to have color. Only the first _'min'_ and first _'max'_ in the array are recognized for each of their respective types. The color will change as a gradient if the **gaugeColors** array contains only _'min'_ and _'max'_. The color will be segmented if any _'threshold'_ types are included in the **gaugeColors** array. Segmented colors on a Gauge will not display the _'max'_ type's color. _Exception_: a full circle Gauge with only _'min'_ and _'max'_ types will be segmented and include both the _'min'_ and _'max'_ colors.
+
+    - **hex**: _string. **Required**._ The [_color hex_](https://www.color-hex.com/) string for this color.
+
+    - **name**: _string. **Required**._ For descriptive purposes only. The name given to this color.
+
+    - **value**: _number. **Required**._ The starting gauge value associated with this color.
+
+  - **theme**: _Object. Optional._ An object controlling additional visual styling and details of the Gauge.
+
+    - **lineCount**: _number. Optional._ The total number of labeled gauge lines (large ticks) not counting the first.
+
+    - **smallLineCount**: _number. Optional._ The total number of unlabeled gauge lines (small ticks) between two labeled gauge lines excluding the starting label but including the ending label.
+
+    - **lineColor**: _string. Optional._ The [_color hex_](https://www.color-hex.com/) string for the color of the gauge lines (ticks).
+
+    - **labelColor**: _string. Optional._ The [_color hex_](https://www.color-hex.com/) string for the color of the labels for the gauge lines.
+
+    - **labelFontSize**: _number. Optional._ The [_CanvasRenderingContext2D font_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/font) size of the gauge labels.
+
+    - **lineStrokeSmall**: _number. Optional._ The [_CanvasRenderingContext2D lineWidth_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineWidth) of the unlabeled gauge lines (small ticks).
+
+    - **lineStrokeLarge**: _number. Optional._ The [_CanvasRenderingContext2D lineWidth_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineWidth) of the labeled gauge lines (large ticks).
+
+    - **tickSizeSmall**: _number. Optional._ The [_CanvasRenderingContext2D lineTo_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineTo) coordinate length of the unlabeled gauge lines (small ticks). Use a different value than **tickSizeLarge** to visually distinguish the length of the gauge lines (ticks).
+
+    - **tickSizeLarge**: _number. Optional._ The [_CanvasRenderingContext2D lineTo_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineTo) coordinate length of the labeled gauge lines (large ticks). Use a different value than **tickSizeSmall** to visually distinguish the length of the gauge lines (ticks).
+
+    - **minFontSize**: _number. Optional._ The [_CanvasRenderingContext2D font_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/font) size of the Gauge's value. Values below a certain size will be ignored and defaulted to a size that is based on the current size of the Gauge.
+
+    - **minLineWidth**: _number. Optional._ The [_CanvasRenderingContext2D lineWidth_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineWidth) or thickness of the Gauge's colors. Values below a certain size will be ignored and defaulted to a size that is based on the current size of the Gauge.
+
+    - **valueColor**: _string. Optional._ The [_color hex_](https://www.color-hex.com/) string for the color of the Gauge's current value.
+
+    - **valuePositionXOffset**: _number. Optional._ The [_CanvasRenderingContext2D fillText_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillText) coordinate offset for the horizontal dimension that the Gauge's value should be moved from its default position.
+
+    - **valuePositionYOffset**: _number. Optional._ The [_CanvasRenderingContext2D fillText_](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillText) coordinate offset for the vertical dimension that the Gauge's value should be moved from its default position.
+
+    - **needleColor0**: _string. Optional._ The [_color hex_](https://www.color-hex.com/) string of the starting color for the color gradient of the Gauge's needle. **needleColor0** should be used in conjunction with **needleColor1**.
+
+    - **needleColor1**: _string. Optional._ The [_color hex_](https://www.color-hex.com/) string of the ending color for the color gradient of the Gauge's needle. **needleColor1** should be used in conjunction with **needleColor0**.
+
+    - **overflowDelta**: _number. Optional._ This constant expresses how far past the gauge min or gauge max the needle should be drawn if the value for the needle is less than gauge min or greater than the gauge max. It is expressed as a percentage of the circumference of a circle, e.g. 0.5 means draw halfway around the gauge from the min or max value.
+
+- **SingleStatLayerConfig**: _Object_. No limit but generally one per `<Plot>`. Using more than one requires additional styling through configuration and is not recommended.
+
+  <br />A Single Stat layer is a pre-defined custom layer that displays a single value on top of any other plot type, or by itself, but usually displayed on top of (single) line graphs. The displayed value is the latest value by timestamp. If more than one value has the latest timestamp, then the first value in the [table](#data-properties) with the latest timestamp will be displayed. Currently, there is no guarantee which value will be considered the first value when there are multiple values with the same timestamp.
+
+  - **type**: _'single stat'. **Required**._ Specifies that this LayerConfig is a single stat layer.
+
+  - **prefix**: _string. **Required**._ The text that appears before the stat value. Use an empty string if no text is preferred.
+
+  - **suffix**: _string. **Required**._ The text that appears after the stat value. Use an empty string if no text is preferred.
+
+  - **decimalPlaces**: _Object. **Required**._
+
+    - **isEnforced**: _boolean. Optional. Defaults to false when not included._ Indicates whether the number of decimal places ("**digits**") will be enforced. When **isEnforced** is falsy or omitted, **digits** will be locked to 2 for stat values with a decimal and 0 for stat values that are integers, and the **digits** option will be ignored.
+    - **digits**: _number. Optional. Defaults to 0 when not included. Maximum 10._ When **digits** is a non-integer number, the decimal portion is ignored. Represents the number of decimal places to display in the stat value. Displayed stat value is subject to rounding.
+
+  - **textColor**: _string. **Required**._ The _CSS color value_ of the entire Single Stat to display including prefix, the stat value, and suffix.
+
+  - **textOpacity**: _number. Optional. Defaults to 1 when not included._ A value between 0 and 1 inclusive, specifying the [opacity](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/opacity) of the entire text for the Single Stat including prefix, the stat value, and suffix. 0 is fully transparent (invisible) while 1 is fully opaque.
+
+  - **backgroundColor**: _string. Optional. Recommendation: do not include. Defaults to transparent when not included._ The [CSS background color](https://developer.mozilla.org/en-US/docs/Web/CSS/background-color) of the background, which covers the area surrounded by the axes and border (whether displayed or not) of the `<Plot>`.
+
+  - **testID**: _string. Optional._ A string value for the `data-testid` prop on the element for the Single Stat. Primarily used for automated testing.
+
+    <br /> The following optional properties affect element attributes in the DOM tree of the Single Stat. Its structure looks like this
+
+    <pre>
+      &#60;div class="giraffe-layer giraffe-layer-single-stat"&#62;
+        &#60;div class="giraffe-single-stat--resizer"&#62;
+          &#60;svg class="giraffe-single-stat--svg"&#62;
+            &#60;text class="giraffe-single-stat--text"&#62;&#60;/text&#62;
+          &#60;/svg&#62;
+        &#60;/div&#62;
+      &#60;/div&#62;
+    </pre>
+
+  - **style**: _Object. Optional. Recommendation: do not include._ An object containing the key-value pairs used for inline styling `.giraffe-layer-single-stat` by setting its [style property](https://developer.mozilla.org/en-US/docs/Web/API/ElementCSSInlineStyle/style). If used, please be aware of existing default styles that may need to be overridden. `backgroundColor` cannot be overridden and is controlled by the **backgroundColor** option (see above). See the `SINGLE_STAT_DEFAULT_STYLE` [here](./src/constants/singleStatStyles.ts).
+
+  - **resizerStyle**: _Object. Optional. Recommendation: do not include._ An object containing the key-value pairs used for inline styling `.giraffe-single-stat--resizer` by setting its [style property](https://developer.mozilla.org/en-US/docs/Web/API/ElementCSSInlineStyle/style). If used, please be aware of existing default styles that may need to be overridden. See the `SINGLE_STAT_RESIZER_DEFAULT_STYLE` [here](./src/constants/singleStatStyles.ts).
+
+  - **svgAttributes**: _Object. Optional. Recommendation: do not include._ An object containing the key-value pairs used for the element attributes of `.giraffe-single-stat--svg`. If used please be aware of the existing default attributes that may need to be overridden. See the `SINGLE_STAT_SVG_DEFAULT_ATTRIBUTES` [here](./src/constants/singleStatStyles.ts).
+
+  - **svgStyle**: _Object. Optional. Recommendation: do not include._ An object containing the key-value pairs used for inline styling `.giraffe-single-stat--svg` by setting its [style property](https://developer.mozilla.org/en-US/docs/Web/API/ElementCSSInlineStyle/style). This element has no existing default styling.
+
+  - **svgTextAttributes**: _Object. Optional. Recommendation: do not include._ An object containing the key-value pairs used for the element attributes of `.giraffe-single-stat--text`. If used please be aware of the existing default attributes that may need to be overridden. `opacity` cannot be overridden and is controlled by the **textOpacity** option (see above). See the `SINGLE_STAT_SVG_TEXT_DEFAULT_ATTRIBUTES` [here](./src/constants/singleStatStyles.ts).
+
+  - **svgTextStyle**: _Object. Optional. Recommendation: do not include._ An object containing the key-value pairs used for inline styling `.giraffe-single-stat--text` by setting its [style property](https://developer.mozilla.org/en-US/docs/Web/API/ElementCSSInlineStyle/style). If used, please be aware of existing default styles that may need to be overridden. `fill` cannot be overridden and is controlled by the **textColor** option (see above). See the `SINGLE_STAT_SVG_TEXT_DEFAULT_STYLE` [here](./src/constants/singleStatStyles.ts).
+
+* **CustomLayerConfig**: _Object_. No limit per `<Plot>`.
 
   A custom layer is an overlay on the Plot that is not one of the above pre-defined plot types. A render callback function is passed in as the renderer for the custom layer. It has two properties:
 

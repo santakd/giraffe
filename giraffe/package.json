@@ -1,6 +1,6 @@
 {
   "name": "@influxdata/giraffe",
-  "version": "0.20.0",
+  "version": "0.23.0",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -23,7 +23,7 @@
     "layer",
     "line",
     "plot",
-    "scatterplot",
+    "scatter",
     "stat",
     "time series",
     "timescale",
@@ -57,7 +57,7 @@
     "intl-dateformat": "^0.1.1",
     "jest": "^24.9.0",
     "memoize-one": "^5.0.2",
-    "prettier": "^1.16.4",
+    "prettier": "^1.19.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-virtualized-auto-sizer": "^1.0.2",

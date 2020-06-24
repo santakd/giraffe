@@ -1,3 +1,5 @@
+import CSS from 'csstype'
+
 export type SizedConfig = Config & {width: number; height: number}
 
 export interface Config {
@@ -118,15 +120,27 @@ export type ColumnData = NumericColumnData | string[] | boolean[]
 
 export type ColumnType = 'number' | 'string' | 'time' | 'boolean'
 
+export enum LayerTypes {
+  Gauge = 'gauge',
+  Custom = 'custom',
+  SingleStat = 'single stat',
+  Heatmap = 'heatmap',
+  Histogram = 'histogram',
+  Line = 'line',
+  Scatter = 'scatter',
+}
+
 export type LayerConfig =
   | CustomLayerConfig
+  | GaugeLayerConfig
+  | SingleStatLayerConfig
   | HeatmapLayerConfig
   | HistogramLayerConfig
   | LineLayerConfig
   | ScatterLayerConfig
 
 export interface CustomLayerConfig {
-  type: 'custom'
+  type: 'custom' // do not refactor or restrict to LayerTypes.Custom
   render: (p: CustomLayerRenderProps) => JSX.Element
 }
 
@@ -143,8 +157,63 @@ export interface CustomLayerRenderProps {
   columnFormatter: (colKey: string) => (x: any) => string
 }
 
+export interface GaugeLayerConfig {
+  type: 'gauge' // do not refactor or restrict to LayerTypes.Gauge
+  prefix: string
+  suffix: string
+  tickPrefix: string
+  tickSuffix: string
+  decimalPlaces: DecimalPlaces
+  gaugeColors: Color[]
+  gaugeSize?: number
+  theme?: GaugeTheme
+}
+
+export interface GaugeTheme {
+  lineCount: number
+  smallLineCount: number
+  lineColor: string
+  labelColor: string
+  labelFontSize: number
+  lineStrokeSmall: number
+  lineStrokeLarge: number
+  tickSizeSmall: number
+  tickSizeLarge: number
+  minFontSize: number
+  minLineWidth: number
+  valueColor: string
+  valuePositionXOffset: number
+  valuePositionYOffset: number
+  needleColor0: string
+  needleColor1: string
+  overflowDelta: number
+}
+
+export interface SingleStatLayerConfig {
+  type: 'single stat' // do not refactor or restrict to LayerTypes.SingleStat
+  prefix: string
+  suffix: string
+  decimalPlaces: DecimalPlaces
+  textColor: string
+  textOpacity?: number
+  backgroundColor?: string
+  testID?: string
+  style?: CSS.Properties
+  resizerStyle?: CSS.Properties
+  svgAttributes?: SingleStatSVGAttributes
+  svgStyle?: CSS.Properties
+  svgTextAttributes?: SingleStatSVGAttributes
+  svgTextStyle?: CSS.Properties
+}
+
+export type SingleStatSVGAttributeFunction = (stat: string) => string
+
+export interface SingleStatSVGAttributes {
+  [attributeName: string]: string | SingleStatSVGAttributeFunction
+}
+
 export interface HeatmapLayerConfig {
-  type: 'heatmap'
+  type: 'heatmap' // do not refactor or restrict to LayerTypes.Heatmap
   x: string
   y: string
   binSize?: number
@@ -156,7 +225,7 @@ export interface HeatmapLayerConfig {
 }
 
 export interface HistogramLayerConfig {
-  type: 'histogram'
+  type: 'histogram' // do not refactor or restrict to LayerTypes.Histogram
   x: string
   position?: HistogramPosition
   binCount?: number
@@ -171,7 +240,7 @@ export interface HistogramLayerConfig {
 export type RectLayerConfig = HeatmapLayerConfig | HistogramLayerConfig
 
 export interface LineLayerConfig {
-  type: 'line'
+  type: 'line' // do not refactor or restrict to LayerTypes.Line
   x: string
   y: string
   fill?: string[]
@@ -186,7 +255,7 @@ export interface LineLayerConfig {
 }
 
 export interface ScatterLayerConfig {
-  type: 'scatter'
+  type: 'scatter' // do not refactor or restrict to LayerTypes.Scatter
   x: string
   y: string
   fill?: string[]
@@ -222,8 +291,14 @@ export interface ScatterLayerConfig {
 */
 export type LayerSpec = LineLayerSpec | ScatterLayerSpec | RectLayerSpec
 
+export enum SpecTypes {
+  Line = 'line',
+  Scatter = 'scatter',
+  Rect = 'rect',
+}
+
 export interface LineLayerSpec {
-  type: 'line'
+  type: 'line' // do not refactor or restrict to SpecTypes.Line
   inputTable: Table
   table: Table // has `FILL` column added
   lineData: LineData
@@ -242,7 +317,7 @@ export interface LineLayerSpec {
 }
 
 export interface ScatterLayerSpec {
-  type: 'scatter'
+  type: 'scatter' // do not refactor or restrict to SpecTypes.Scatter
   inputTable: Table
   table: Table // has `FILL` and `SYMBOL` columns added
   xDomain: number[]
@@ -262,7 +337,7 @@ export interface ScatterLayerSpec {
 }
 
 export interface RectLayerSpec {
-  type: 'rect'
+  type: 'rect' // do not refactor or restrict to SpecTypes.Rect
   inputTable: Table
   table: Table // has `X_MIN`, `X_MAX`, `Y_MIN`, `Y_MAX`, and `COUNT` columns, and maybe a `FILL` column
   binDimension: 'xy' | 'x'
@@ -301,11 +376,24 @@ export type ScaleFactory = (
   rangeStop: number
 ) => Scale<number, number>
 
+export interface DecimalPlaces {
+  isEnforced?: boolean
+  digits?: number
+}
+
 export interface Margins {
   top: number
   right: number
   bottom: number
   left: number
+}
+
+export interface Color {
+  id: string
+  type: 'min' | 'max' | 'threshold' | 'scale' | 'text' | 'background'
+  hex: string
+  name: string
+  value: number
 }
 
 export interface TooltipColumn {

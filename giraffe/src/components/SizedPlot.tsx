@@ -4,10 +4,16 @@ import {useCallback, FunctionComponent, CSSProperties} from 'react'
 import {Axes} from './Axes'
 import {
   SizedConfig,
+  GaugeLayerConfig,
+  SingleStatLayerConfig,
   LineLayerConfig,
   ScatterLayerConfig,
   RectLayerConfig,
+  LayerTypes,
+  SpecTypes,
 } from '../types'
+import {GaugeLayer} from './GaugeLayer'
+import {SingleStatLayer} from './SingleStatLayer'
 import {LineLayer} from './LineLayer'
 import {ScatterLayer} from './ScatterLayer'
 import {RectLayer} from './RectLayer'
@@ -17,6 +23,7 @@ import {usePlotEnv} from '../utils/usePlotEnv'
 import {useMousePos} from '../utils/useMousePos'
 import {useDragEvent} from '../utils/useDragEvent'
 import {useForceUpdate} from '../utils/useForceUpdate'
+import {LatestValueTransform} from './LatestValueTransform'
 
 interface Props {
   config: SizedConfig
@@ -93,7 +100,24 @@ export const SizedPlot: FunctionComponent<Props> = ({
       >
         <div className="giraffe-layers" style={fullsizeStyle}>
           {config.layers.map((layerConfig, layerIndex) => {
-            if (layerConfig.type === 'custom') {
+            if (layerConfig.type === LayerTypes.Gauge) {
+              return (
+                <LatestValueTransform
+                  key={layerIndex}
+                  table={config.table}
+                  allowString={true}
+                >
+                  {latestValue => (
+                    <GaugeLayer
+                      value={latestValue}
+                      config={layerConfig as GaugeLayerConfig}
+                    />
+                  )}
+                </LatestValueTransform>
+              )
+            }
+
+            if (layerConfig.type === LayerTypes.Custom) {
               const renderProps = {
                 key: layerIndex,
                 width,
@@ -110,6 +134,23 @@ export const SizedPlot: FunctionComponent<Props> = ({
               return layerConfig.render(renderProps)
             }
 
+            if (layerConfig.type === LayerTypes.SingleStat) {
+              return (
+                <LatestValueTransform
+                  key={layerIndex}
+                  table={config.table}
+                  allowString={true}
+                >
+                  {latestValue => (
+                    <SingleStatLayer
+                      stat={latestValue}
+                      config={layerConfig as SingleStatLayerConfig}
+                    />
+                  )}
+                </LatestValueTransform>
+              )
+            }
+
             const spec = env.getSpec(layerIndex)
 
             const sharedProps = {
@@ -124,7 +165,7 @@ export const SizedPlot: FunctionComponent<Props> = ({
             }
 
             switch (spec.type) {
-              case 'line':
+              case SpecTypes.Line:
                 return (
                   <LineLayer
                     key={layerIndex}
@@ -134,7 +175,7 @@ export const SizedPlot: FunctionComponent<Props> = ({
                   />
                 )
 
-              case 'scatter': {
+              case SpecTypes.Scatter: {
                 return (
                   <ScatterLayer
                     key={layerIndex}
@@ -145,7 +186,7 @@ export const SizedPlot: FunctionComponent<Props> = ({
                 )
               }
 
-              case 'rect': {
+              case SpecTypes.Rect: {
                 return (
                   <RectLayer
                     key={layerIndex}
